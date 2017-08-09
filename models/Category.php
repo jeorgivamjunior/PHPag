@@ -4,6 +4,12 @@ namespace models;
 
 use config\DataBase;
 
+/**
+ * Class Category
+ * @package models
+ * @property integer $id
+ * @property string $name
+ */
 class Category extends DataBase
 {
     public $name;
