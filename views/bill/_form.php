@@ -1,6 +1,6 @@
 <?php
 /** @var $categories \models\Category[] */
-/** @var $model \models\Product */
+/** @var $model \models\Bill */
 ?>
 
 <form method="post">
@@ -27,6 +27,20 @@
             <?= $model->getLabel('price') ?>
         </div>
         <input id="currency" name="price" value="<?= $model->price ?>" title="" type="text"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <div class="control-label">
+            <?= $model->getLabel('due') ?>
+        </div>
+        <input name="price" value="<?= $model->due ?>" title="" type="date"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <div class="control-label">
+            <?= $model->getLabel('total') ?>
+        </div>
+        <input name="total" value="<?= $model->total ?>" title="" type="text"
                class="form-control">
     </div>
     <div class="form-group">

@@ -21,7 +21,7 @@ class UserController
         $model = new User();
 
         if ($model->load() && $model->save()) {
-            header("location:/construPHP/user/index");
+            header("location:/PHPag/user/index");
         }
 
         return [
@@ -35,7 +35,7 @@ class UserController
         $model = $user->findOne($_GET['id']);
 
         if ($model->load() && $model->update()) {
-            header("location:/construPHP/user/index");
+            header("location:/PHPag/user/index");
         }
 
         return [
@@ -49,6 +49,6 @@ class UserController
         $user = new User();
         $model = $user->findOne($_GET['id']);
         $model->delete();
-        header("location:/construPHP/user/index");
+        header("location:/PHPag/user/index");
     }
 }

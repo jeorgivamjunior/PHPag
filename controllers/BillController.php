@@ -3,38 +3,38 @@
 namespace controllers;
 
 use models\Category;
-use models\Product;
+use models\Bill;
 
-class ProductController
+class BillController
 {
     public static function index()
     {
-        $product = new Product();
-        $models = $product->findAll();
+        $bill = new Bill();
+        $models = $bill->findAll();
         $category = new Category();
 
-        $productsFiltered = [];
+        $billsFiltered = [];
 
-        /** @var Product $product */
-        foreach ($models as $product) {
-            $productsFiltered[$product->category_id][] = $product;
+        /** @var Bill $bill */
+        foreach ($models as $bill) {
+            $billsFiltered[$bill->category_id][] = $bill;
         }
 
         return [
             'models' => $models,
-            'productsFiltered' => $productsFiltered,
+            'productsFiltered' => $billsFiltered,
             'category' => $category
         ];
     }
 
     public static function create()
     {
-        $model = new Product();
+        $model = new Bill();
         $category = new Category();
         $categories = $category->findAll();
 
         if ($model->load() && $model->save()) {
-            header("location:/construPHP/product/index");
+            header("location:/PHPag/product/index");
         }
 
         return [
@@ -45,13 +45,13 @@ class ProductController
 
     public static function update()
     {
-        $product = new Product();
-        $model = $product->findOne($_GET['id']);
+        $bill = new Bill();
+        $model = $bill->findOne($_GET['id']);
         $category = new Category();
         $categories = $category->findAll();
 
         if ($model->load() && $model->update()) {
-            header("location:/construPHP/product/index");
+            header("location:/PHPag/bill/index");
         }
 
         return [
@@ -63,9 +63,9 @@ class ProductController
 
     public static function delete()
     {
-        $product = new Product();
-        $model = $product->findOne($_GET['id']);
+        $bill = new Bill();
+        $model = $bill->findOne($_GET['id']);
         $model->delete();
-        header("location:/construPHP/product/index");
+        header("location:/PHPag/'/index");
     }
 }

@@ -1,5 +1,5 @@
 <?php
-/** @var $model \models\Product */
+/** @var $model \models\Bill */
 ?>
 
 <form method="post">

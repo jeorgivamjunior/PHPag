@@ -4,11 +4,13 @@ namespace models;
 
 use config\DataBase;
 
-class Product extends DataBase
+class Bill extends DataBase
 {
     public $name;
     public $category_id;
     public $price;
+    public $due;
+    public $total;
 
     /**
      * @inheritdoc
@@ -17,13 +19,14 @@ class Product extends DataBase
     {
         return [
             [['category_id', 'price'], 'integer'],
-            [['name'], 'string']
+            [['name'], 'string'],
+            [['due', 'total'], 'safe']
         ];
     }
 
     public function getTableName()
     {
-        return "product";
+        return "bill";
     }
 
     public function getLabel($attr)
@@ -31,7 +34,9 @@ class Product extends DataBase
         $labels = [
             'name' => 'Nome',
             'category_id' => 'Categoria',
-            'price' => 'Preço'
+            'price' => 'Preço',
+            'due' => 'Data de Vencimento',
+            'total' => 'Total (R$)'
         ];
 
         return $labels[$attr];

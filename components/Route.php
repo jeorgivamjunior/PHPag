@@ -9,12 +9,12 @@ class Route
         $params = explode('/', $_SERVER['REQUEST_URI']);
 
         if (!isset($_SESSION['userLogged']) && $params[2] != 'site' && $params[3] != 'login')
-            header("location:/construPHP/site/login");
+            header("location:/PHPag/site/login");
 
         if (count($params) > 2) {
 
             if (empty($params[2]))
-                header("location:/construPHP/product/index");
+                header("location:/PHPag/bill/index");
 
             if (isset($params[4])) {
                 $_GET['id'] = $params[4];

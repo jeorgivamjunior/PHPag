@@ -21,7 +21,7 @@ class CategoryController
         $model = new Category();
 
         if ($model->load() && $model->save()) {
-            header("location:/construPHP/category/index");
+            header("location:/PHPag/category/index");
         }
 
         return [
@@ -35,7 +35,7 @@ class CategoryController
         $model = $category->findOne($_GET['id']);
 
         if ($model->load() && $model->update()) {
-            header("location:/construPHP/category/index");
+            header("location:/PHPag/category/index");
         }
 
         return [
@@ -48,6 +48,6 @@ class CategoryController
         $product = new Category();
         $model = $product->findOne($_GET['id']);
         $model->delete();
-        header("location:/construPHP/category/index");
+        header("location:/PHPag/category/index");
     }
 }

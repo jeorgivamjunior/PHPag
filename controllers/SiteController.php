@@ -11,7 +11,7 @@ class SiteController
         $model = new LoginForm();
 
         if ($model->load() && $model->login()) {
-            header("location:/construPHP/product/index");
+            header("location:/PHPag/bill/index");
         }
 
         return [
@@ -24,6 +24,6 @@ class SiteController
         if (isset($_SESSION['userLogged']))
             unset($_SESSION['userLogged']);
 
-        header("location:/construPHP/site/login");
+        header("location:/PHPag/site/login");
     }
 }

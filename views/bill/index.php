@@ -1,15 +1,15 @@
 <?php
-/** @var $models \models\Product[] */
-/** @var $productsFiltered \models\Product[] */
+/** @var $models \models\Bill[] */
+/** @var $productsFiltered \models\Bill[] */
 /** @var $category \models\Category */
 ?>
 
 <div class="row">
-    <h2 class="text-center">Produtos</h2>
+    <h2 class="text-center">Contas</h2>
     <div class="col-md-4 col-md-offset-4">
         <div class="panel">
             <div class="panel-heading">
-                <a class="btn btn-primary" href="product/create">Novo</a>
+                <a class="btn btn-primary" href="bill/create">Novo</a>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">

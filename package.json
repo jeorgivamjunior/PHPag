@@ -1,0 +1,22 @@
+{
+  "name": "phpag",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeorgivamjunior/PHPag.git"
+  },
+  "author": "Jeorgivam Júnior",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeorgivamjunior/PHPag/issues"
+  },
+  "homepage": "https://github.com/jeorgivamjunior/PHPag#readme",
+  "dependencies": {
+    "gentelella": "^1.3.0"
+  }
+}

@@ -24,7 +24,6 @@ class LoginForm extends DataBase
     {
         $user = new User();
         $this->_user = $user->findUserByEmail($this->email);
-
         if (!empty($this->_user)) {
             if ($this->password == $this->_user->password) {
                 unset($this->_user->password);

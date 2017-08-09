@@ -5,6 +5,6 @@ return [
         'user' => 'root',
         'password' => 'root',
         'host' => 'localhost',
-        'database' => 'construPHP'
+        'database' => 'PHPag'
     ]
 ];
