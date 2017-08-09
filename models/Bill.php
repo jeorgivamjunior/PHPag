@@ -9,6 +9,7 @@ class Bill extends DataBase
     public $name;
     public $category_id;
     public $due;
+    public $recurrent;
     public $total;
 
     /**
@@ -17,7 +18,7 @@ class Bill extends DataBase
     public function rules()
     {
         return [
-            [['category_id'], 'integer'],
+            [['category_id', 'recurrent', ''], 'integer'],
             [['name'], 'string'],
             [['due', 'total'], 'safe']
         ];
@@ -34,6 +35,7 @@ class Bill extends DataBase
             'name' => 'Nome',
             'category_id' => 'Categoria',
             'due' => 'Data de Vencimento',
+            'recurrent' => 'Recorrente',
             'total' => 'Total (R$)'
         ];
 

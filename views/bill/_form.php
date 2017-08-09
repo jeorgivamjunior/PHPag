@@ -30,11 +30,23 @@
                class="form-control">
     </div>
     <div class="form-group">
+        <label>
+            <input name="recurrent" value="<?= $model->recurrent ?>" title="" type="checkbox">
+            <?= $model->getLabel('recurrent') ?>
+        </label>
+    </div>
+    <div class="form-group">
         <div class="control-label">
             <?= $model->getLabel('total') ?>
         </div>
         <input name="total" value="<?= $model->total ?>" title="" type="text"
                class="form-control">
+    </div>
+    <div class="form-group">
+        <label>
+            <input name="recurrent" value="<?= $model->recurrent ?>" title="" type="checkbox">
+            <?= $model->getLabel('recurrent') ?>
+        </label>
     </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" value="Salvar">
