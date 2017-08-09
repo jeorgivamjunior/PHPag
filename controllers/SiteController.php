@@ -26,4 +26,9 @@ class SiteController
 
         header("location:/PHPag/site/login");
     }
+
+    public static function index()
+    {
+        return [];
+    }
 }

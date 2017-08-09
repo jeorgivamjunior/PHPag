@@ -24,13 +24,6 @@
     </div>
     <div class="form-group">
         <div class="control-label">
-            <?= $model->getLabel('price') ?>
-        </div>
-        <input id="currency" name="price" value="<?= $model->price ?>" title="" type="text"
-               class="form-control">
-    </div>
-    <div class="form-group">
-        <div class="control-label">
             <?= $model->getLabel('due') ?>
         </div>
         <input name="price" value="<?= $model->due ?>" title="" type="date"

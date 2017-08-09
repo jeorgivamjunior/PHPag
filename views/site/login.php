@@ -2,30 +2,38 @@
 /** @var $model \models\LoginForm */
 ?>
 
+<div class="login_wrapper">
+    <div class="animate form login_form">
+        <section class="login_content">
+            <form method="post">
+                <h1>Acesso Sistema</h1>
+                <div>
+                    <input autofocus name="email" value="<?= $model->email ?>" type="text" class="form-control"
+                           placeholder="<?= $model->getLabel('email') ?>" required=""/>
+                </div>
+                <div>
+                    <input name="password" value="<?= $model->password ?>" type="password" class="form-control"
+                           placeholder="<?= $model->getLabel('password') ?>"
+                           required=""/>
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-default center-margin" style="margin: 0" value="Entrar">
+                </div>
 
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <div class="panel">
-            <div class="panel-body">
-                <form method="post">
-                    <div class="form-group">
-                        <div class="control-label">
-                            <?= $model->getLabel('email') ?>
-                        </div>
-                        <input name="email" value="<?= $model->email ?>" title="" class="form-control">
+                <div class="clearfix"></div>
+
+                <div class="separator">
+                    <div class="clearfix"></div>
+                    <br/>
+
+                    <div>
+                        <h1><i class="fa fa-money"></i> PHPag</h1>
+                        <p>
+                            ©2017 All Rights Reserved.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <div class="control-label">
-                            <?= $model->getLabel('password') ?>
-                        </div>
-                        <input name="password" value="<?= $model->password ?>" title="" type="password"
-                               class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input class="btn btn-primary" type="submit" value="Entrar">
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            </form>
+        </section>
     </div>
 </div>

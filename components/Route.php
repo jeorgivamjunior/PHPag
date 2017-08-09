@@ -7,14 +7,15 @@ class Route
     public static function generate()
     {
         $params = explode('/', $_SERVER['REQUEST_URI']);
-
         if (!isset($_SESSION['userLogged']) && $params[2] != 'site' && $params[3] != 'login')
             header("location:/PHPag/site/login");
 
         if (count($params) > 2) {
 
-            if (empty($params[2]))
-                header("location:/PHPag/bill/index");
+            if (empty($params[2])) {
+                $params[2] = 'site';
+                $params[3] = 'index';
+            }
 
             if (isset($params[4])) {
                 $_GET['id'] = $params[4];

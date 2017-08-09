@@ -8,7 +8,6 @@ class Bill extends DataBase
 {
     public $name;
     public $category_id;
-    public $price;
     public $due;
     public $total;
 
@@ -18,7 +17,7 @@ class Bill extends DataBase
     public function rules()
     {
         return [
-            [['category_id', 'price'], 'integer'],
+            [['category_id'], 'integer'],
             [['name'], 'string'],
             [['due', 'total'], 'safe']
         ];
@@ -34,7 +33,6 @@ class Bill extends DataBase
         $labels = [
             'name' => 'Nome',
             'category_id' => 'Categoria',
-            'price' => 'Preço',
             'due' => 'Data de Vencimento',
             'total' => 'Total (R$)'
         ];
