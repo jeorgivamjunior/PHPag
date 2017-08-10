@@ -34,11 +34,6 @@ use components\Route;
     <!-- iCheck -->
     <link href="node_modules/gentelella/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-    <!-- bootstrap-progressbar -->
-    <link href="node_modules/gentelella/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
-          rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="node_modules/gentelella/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="node_modules/gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
@@ -47,6 +42,7 @@ use components\Route;
 
     <!-- jQuery -->
     <script src="node_modules/gentelella/vendors/jquery/dist/jquery.min.js"></script>
+
 <body class="<?= (isset($_SESSION['userLogged'])) ? 'nav-md' : 'login' ?>">
 <?php if (isset($_SESSION['userLogged'])): ?>
     <div class="container body">
@@ -175,5 +171,8 @@ use components\Route;
 <script src="node_modules/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="node_modules/gentelella/build/js/custom.min.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 </body>
 </html>

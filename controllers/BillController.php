@@ -45,7 +45,7 @@ class BillController
         $categories = $category->findAll();
 
         if ($model->load() && $model->save()) {
-            header("location:/PHPag/bill/index");
+//            header("location:/PHPag/bill/index");
         }
 
         return [
@@ -80,7 +80,7 @@ class BillController
         $recurrent = new Recurrent();
         $recurrent = $recurrent->findOne(['bill_id' => $_GET['id']]);
         $model->recurrent = !empty($recurrent);
-        $model->period = $recurrent->period;
+        $model->period = (empty($recurrent)) ? "" : $recurrent->period;
 
         if ($model->load() && $model->update()) {
             header("location:/PHPag/bill/index");

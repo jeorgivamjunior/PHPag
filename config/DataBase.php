@@ -93,7 +93,7 @@ abstract class DataBase
     public function formatAttributesToUpdateQuery()
     {
         $query = [];
-        $attributes = $this->attributes();
+        $attributes = $this->attributes(true);
         $values = $this->valuesOf($attributes);
         $index = 0;
         foreach ($attributes as $attribute) {
@@ -135,9 +135,10 @@ abstract class DataBase
         return null;
     }
 
-
     public function update()
     {
+        $this->beforeSave();
+
         $querySQL = "UPDATE " . $this->getTableName() . " SET " . $this->formatAttributesToUpdateQuery() . " WHERE id=$this->id";
 
         $query = $this->link->query($querySQL);
@@ -145,12 +146,19 @@ abstract class DataBase
             echo $this->link->error . PHP_EOL . $querySQL;
 
         if ($query) {
-            return static::findOne($this->id);
+            $model = static::findOne($this->id);
+
+            if (method_exists($this, 'afterSave')) {
+                call_user_func_array(array($this, 'afterSave'), [true]);
+            } else {
+                $this->afterSave(true);
+            }
+
+            return $model;
         }
 
         return null;
     }
-
 
     public function findAll($condition = null)
     {
