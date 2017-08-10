@@ -44,6 +44,9 @@ use components\Route;
 
     <!-- Custom Theme Style -->
     <link href="node_modules/gentelella/build/css/custom.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="node_modules/gentelella/vendors/jquery/dist/jquery.min.js"></script>
 <body class="<?= (isset($_SESSION['userLogged'])) ? 'nav-md' : 'login' ?>">
 <?php if (isset($_SESSION['userLogged'])): ?>
     <div class="container body">
@@ -167,8 +170,7 @@ use components\Route;
     Route::generate();
     ?>
 <?php endif; ?>
-<!-- jQuery -->
-<script src="node_modules/gentelella/vendors/jquery/dist/jquery.min.js"></script>
+
 <!-- Bootstrap -->
 <script src="node_modules/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Custom Theme Scripts -->

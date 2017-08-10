@@ -5,14 +5,15 @@ namespace models;
 use config\DataBase;
 
 /**
- * Class Category
+ * Class Recurrent
  * @package models
- * @property integer $id
- * @property string $name
+ * @property integer $bill_id
+ * @property string $period
  */
-class Category extends DataBase
+class Recurrent extends DataBase
 {
-    public $name;
+    public $bill_id;
+    public $period;
 
     /**
      * @inheritdoc
@@ -20,20 +21,19 @@ class Category extends DataBase
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string']
+            [['bill_id'], 'required'],
+            [['bill_id', 'period'], 'integer']
         ];
     }
 
     public function getTableName()
     {
-        return "category";
+        return "recurrent";
     }
 
     public function getLabel($attr)
     {
         $labels = [
-            'name' => 'Nome',
         ];
 
         return $labels[$attr];

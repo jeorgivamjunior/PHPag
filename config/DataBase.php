@@ -22,24 +22,41 @@ abstract class DataBase
     public function load()
     {
         $post = $_POST;
-
+        $continue = true;
+        $required = $this->getSpecifyRule('required');
         foreach ($this->attributes() as $attribute) {
-            if (!empty($post[$attribute])) {
+            if (isset($post[$attribute])) {
                 $this->$attribute = $post[$attribute];
             } else {
-                return false;
+                if (in_array($attribute, $required))
+                    $continue = false;
             }
         }
 
-        return true;
+        return $continue;
     }
 
-    public function attributes()
+    public function getSpecifyRule($name)
+    {
+        $fields = [];
+        foreach ($this->rules() as $rule) {
+            if ($rule[1] == $name) {
+                $fields = $rule['0'];
+            }
+        }
+        return $fields;
+    }
+
+    public function attributes($toSave = false)
     {
         $class = new \ReflectionClass($this);
         $names = [];
+        $relation = $this->getSpecifyRule('relation');
         foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
             if (!$property->isStatic() && !$property->isProtected()) {
+                if ($toSave && (in_array($property->getName(), $relation) || $property->getValue($this) == ''))
+                    continue;
+
                 $names[] = $property->getName();
             }
         }
@@ -93,8 +110,10 @@ abstract class DataBase
      */
     public function save($attributes = null)
     {
+        $this->beforeSave();
+
         if (is_null($attributes)) {
-            $attributes = $this->attributes();
+            $attributes = $this->attributes(true);
         }
         $querySQL = "INSERT INTO " . $this->getTableName() . " (" . implode(",", $attributes) . ") VALUES (" . implode(",", $this->valuesOf($attributes)) . ")";
         $query = $this->link->query($querySQL);
@@ -103,7 +122,9 @@ abstract class DataBase
             echo $this->link->error . PHP_EOL . $querySQL;
 
         if ($query) {
-            return static::findOne($this->link->insert_id);
+            $model = static::findOne($this->link->insert_id);
+            $this->afterSave(true);
+            return $model;
         }
 
         return null;
@@ -196,6 +217,10 @@ abstract class DataBase
 
         return (!empty($query));
     }
+
+    abstract function beforeSave();
+
+    abstract function afterSave($insert);
 
     abstract function getTableName();
 

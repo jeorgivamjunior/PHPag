@@ -22,19 +22,39 @@ class BillController
 
         return [
             'models' => $models,
-            'productsFiltered' => $billsFiltered,
+            'billsFiltered' => $billsFiltered,
             'category' => $category
         ];
     }
 
-    public static function create()
+    public static function pay()
     {
         $model = new Bill();
+        $model->pay_or_receive = 0;
+        $category = new Category();
+        $categories = $category->findAll();
+
+//        if ($model->load() && $model->save()) {
+        if ($model->load()) {
+            var_dump($model);
+//            header("location:/PHPag/bill/index");
+        }
+
+        return [
+            'model' => $model,
+            'categories' => $categories
+        ];
+    }
+
+    public static function receive()
+    {
+        $model = new Bill();
+        $model->pay_or_receive = 1;
         $category = new Category();
         $categories = $category->findAll();
 
         if ($model->load() && $model->save()) {
-            header("location:/PHPag/product/index");
+//            header("location:/PHPag/bill/index");
         }
 
         return [

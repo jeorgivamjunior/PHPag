@@ -36,7 +36,18 @@ class User extends DataBase
     function rules()
     {
         return [
+            [['name', 'email', 'password'], 'required'],
             [['name', 'email', 'password'], 'string']
         ];
+    }
+
+    public function beforeSave()
+    {
+        // TODO: Implement beforeSave() method.
+    }
+
+    public function afterSave($insert)
+    {
+        // TODO: Implement afterSave() method.
     }
 }

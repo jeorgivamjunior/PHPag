@@ -44,7 +44,18 @@ class LoginForm extends DataBase
     function rules()
     {
         return [
+            [['email', 'password'], 'required'],
             [['email', 'password'], 'string']
         ];
+    }
+
+    public function beforeSave()
+    {
+        // TODO: Implement beforeSave() method.
+    }
+
+    public function afterSave($insert)
+    {
+        // TODO: Implement afterSave() method.
     }
 }
