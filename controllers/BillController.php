@@ -4,6 +4,7 @@ namespace controllers;
 
 use models\Category;
 use models\Bill;
+use models\Recurrent;
 
 class BillController
 {
@@ -76,6 +77,10 @@ class BillController
         $model = $bill->findOne($_GET['id']);
         $category = new Category();
         $categories = $category->findAll();
+        $recurrent = new Recurrent();
+        $recurrent = $recurrent->findOne(['bill_id' => $_GET['id']]);
+        $model->recurrent = !empty($recurrent);
+        $model->period = $recurrent->period;
 
         if ($model->load() && $model->update()) {
             header("location:/PHPag/bill/index");

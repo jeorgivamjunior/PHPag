@@ -51,12 +51,16 @@ class Bill extends DataBase
 
     public function afterSave($insert)
     {
+        $recurrent = new Recurrent();
         if ($this->recurrent) {
-            $recurrent = new Recurrent();
             $recurrent->bill_id = $this->id;
             $recurrent->period = $this->period;
             $recurrent->save();
         }
+        $recurrent = $recurrent->findOne(['bill_id' => $this->id]);
+        if (!empty($recurrent))
+            $recurrent->delete();
+
 
         parent::afterSave($insert);
     }
