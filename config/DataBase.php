@@ -54,7 +54,7 @@ abstract class DataBase
         $relation = $this->getSpecifyRule('relation');
         foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
             if (!$property->isStatic() && !$property->isProtected()) {
-                if ($toSave && (in_array($property->getName(), $relation) || $property->getValue($this) == ''))
+                if ($toSave && (in_array($property->getName(), $relation) || $property->getValue($this) === ''))
                     continue;
 
                 $names[] = $property->getName();

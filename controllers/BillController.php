@@ -10,19 +10,28 @@ class BillController
     public static function index()
     {
         $bill = new Bill();
-        $models = $bill->findAll();
+        $modelsToPay = $bill->findAll(['pay_or_receive' => 0]);
+        $modelsToReceive = $bill->findAll(['pay_or_receive' => 1]);
         $category = new Category();
 
-        $billsFiltered = [];
+        $billsToPayFiltered = [];
+        $billsToReceiveFiltered = [];
 
         /** @var Bill $bill */
-        foreach ($models as $bill) {
-            $billsFiltered[$bill->category_id][] = $bill;
+        foreach ($modelsToPay as $bill) {
+            $billsToPayFiltered[$bill->category_id][] = $bill;
+        }
+
+        /** @var Bill $bill */
+        foreach ($modelsToReceive as $bill) {
+            $billsToReceiveFiltered[$bill->category_id][] = $bill;
         }
 
         return [
-            'models' => $models,
-            'billsFiltered' => $billsFiltered,
+            'modelsToReceive' => $modelsToReceive,
+            'modelsToPay' => $modelsToPay,
+            'billsToReceiveFiltered' => $billsToReceiveFiltered,
+            'billsToPayFiltered' => $billsToPayFiltered,
             'category' => $category
         ];
     }
@@ -34,10 +43,8 @@ class BillController
         $category = new Category();
         $categories = $category->findAll();
 
-//        if ($model->load() && $model->save()) {
-        if ($model->load()) {
-            var_dump($model);
-//            header("location:/PHPag/bill/index");
+        if ($model->load() && $model->save()) {
+            header("location:/PHPag/bill/index");
         }
 
         return [
@@ -86,6 +93,6 @@ class BillController
         $bill = new Bill();
         $model = $bill->findOne($_GET['id']);
         $model->delete();
-        header("location:/PHPag/'/index");
+        header("location:/PHPag/bill/index");
     }
 }
