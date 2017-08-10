@@ -40,14 +40,4 @@ class User extends DataBase
             [['name', 'email', 'password'], 'string']
         ];
     }
-
-    public function beforeSave()
-    {
-        // TODO: Implement beforeSave() method.
-    }
-
-    public function afterSave($insert)
-    {
-        // TODO: Implement afterSave() method.
-    }
 }

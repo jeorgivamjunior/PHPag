@@ -55,13 +55,9 @@ class Bill extends DataBase
             $recurrent = new Recurrent();
             $recurrent->bill_id = $this->id;
             $recurrent->period = $this->period;
-            var_dump($recurrent);
             $recurrent->save();
         }
-    }
 
-    public function beforeSave()
-    {
-        // TODO: Implement beforeSave() method.
+        parent::afterSave($insert);
     }
 }

@@ -38,14 +38,4 @@ class Category extends DataBase
 
         return $labels[$attr];
     }
-
-    public function beforeSave()
-    {
-        // TODO: Implement beforeSave() method.
-    }
-
-    public function afterSave($insert)
-    {
-        // TODO: Implement afterSave() method.
-    }
 }

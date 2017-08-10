@@ -54,7 +54,7 @@ class BillController
         $categories = $category->findAll();
 
         if ($model->load() && $model->save()) {
-//            header("location:/PHPag/bill/index");
+            header("location:/PHPag/bill/index");
         }
 
         return [

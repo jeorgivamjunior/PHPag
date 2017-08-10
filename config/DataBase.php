@@ -123,7 +123,12 @@ abstract class DataBase
 
         if ($query) {
             $model = static::findOne($this->link->insert_id);
-            $this->afterSave(true);
+            if (method_exists($this, 'afterSave')) {
+                call_user_func_array(array($this, 'afterSave'), [true]);
+            } else {
+                $this->afterSave(true);
+            }
+
             return $model;
         }
 
@@ -218,9 +223,13 @@ abstract class DataBase
         return (!empty($query));
     }
 
-    abstract function beforeSave();
+    public function beforeSave()
+    {
+    }
 
-    abstract function afterSave($insert);
+    public function afterSave($insert)
+    {
+    }
 
     abstract function getTableName();
 
