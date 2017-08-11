@@ -7,7 +7,10 @@
 ?>
 <div class="row">
     <?php include('_search.php') ?>
-    <h2 class="text-center">Contas</h2>
+
+    <h2 class="text-center">
+        Contas
+    </h2>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
@@ -24,6 +27,7 @@
                                     <th>Total</th>
                                     <th>Pago</th>
                                     <th>Data</th>
+                                    <th>Recorrente</th>
                                     <th>Ações</th>
                                 </tr>
                                 <?php foreach ($modelsToReceive as $model): ?>
@@ -32,6 +36,7 @@
                                         <td><?= "R$ " . number_format($model->total, 2, ',', '.') ?></td>
                                         <td><?= $model->paid ? "Sim" : "Não" ?></td>
                                         <td><?= date('d/m/Y', strtotime($model->due)) ?></td>
+                                        <td><?= $model->recurrent ? "Sim" : "Não" ?></td>
                                         <td>
                                             <a href="bill/update/<?= $model->id ?>">Editar</a>
                                             <a onclick="if(!confirm('Deseja apagar este item?')){return false}"
@@ -63,6 +68,7 @@
                                     <th>Total</th>
                                     <th>Pago</th>
                                     <th>Data</th>
+                                    <th>Recorrente</th>
                                     <th>Ações</th>
                                 </tr>
                                 <?php foreach ($modelsToPay as $model): ?>
@@ -71,6 +77,7 @@
                                         <td><?= "R$ " . number_format($model->total, 2, ',', '.') ?></td>
                                         <td><?= $model->paid ? "Sim" : "Não" ?></td>
                                         <td><?= date('d/m/Y', strtotime($model->due)) ?></td>
+                                        <td><?= $model->recurrent ? "Sim" : "Não" ?></td>
                                         <td>
                                             <a href="bill/update/<?= $model->id ?>">Editar</a>
                                             <a onclick="if(!confirm('Deseja apagar este item?')){return false}"

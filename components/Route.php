@@ -22,12 +22,12 @@ class Route
             }
 
             $class = "controllers\\" . ucfirst($params[2]) . "Controller";
-            foreach (call_user_func($class . '::' . $params[3]) as $key => $item) {
+            foreach (call_user_func($class . '::' . explode('?', $params[3])[0]) as $key => $item) {
                 $$key = $item;
             }
 
             if ($params[3] != 'delete' && $params[3] != 'logout')
-                require_once("views/$params[2]/$params[3].php");
+                require_once("views/$params[2]/" . explode('?', $params[3])[0] . ".php");
         }
     }
 }

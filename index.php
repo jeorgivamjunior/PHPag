@@ -27,21 +27,19 @@ use components\Route;
 
     <!-- Bootstrap -->
     <link href="node_modules/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link href="node_modules/gentelella/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="node_modules/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="node_modules/gentelella/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
-    <!-- bootstrap-daterangepicker -->
-    <link href="node_modules/gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="node_modules/gentelella/build/css/custom.min.css" rel="stylesheet">
 
+    <!-- Custom Theme Style -->
+    <link href="node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
     <!-- jQuery -->
     <script src="node_modules/gentelella/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/gentelella/vendors/Chart.js/dist/Chart.min.js"></script>
 
 <body class="<?= (isset($_SESSION['userLogged'])) ? 'nav-md' : 'login' ?>">
 <?php if (isset($_SESSION['userLogged'])): ?>
@@ -125,7 +123,6 @@ use components\Route;
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Editar Perfil</a></li>
                                     <li>
                                         <a href="site/logout">
                                             <i class="fa fa-sign-out pull-right"></i>
@@ -154,7 +151,7 @@ use components\Route;
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    ©2017 All Rights Reserved.
                 </div>
                 <div class="clearfix"></div>
             </footer>
@@ -173,6 +170,6 @@ use components\Route;
 <script src="node_modules/gentelella/build/js/custom.min.js"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 </body>
 </html>

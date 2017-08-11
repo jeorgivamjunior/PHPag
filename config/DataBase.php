@@ -19,14 +19,20 @@ abstract class DataBase
         }
     }
 
-    public function load()
+    public function load($from = [])
     {
         $post = $_POST;
+        if (!empty($from))
+            $post = $from;
+
         $continue = true;
         $required = $this->getSpecifyRule('required');
         foreach ($this->attributes() as $attribute) {
             if (isset($post[$attribute])) {
                 $this->$attribute = $post[$attribute];
+
+                if (in_array($attribute, $required) && $post[$attribute] == '')
+                    $continue = false;
             } else {
                 if (in_array($attribute, $required))
                     $continue = false;
@@ -160,7 +166,7 @@ abstract class DataBase
         return null;
     }
 
-    public function findAll($condition = null)
+    public function findAll($condition = null, $isManuelQuery = false)
     {
         $querySQL = "SELECT * FROM " . $this->getTableName();
 
@@ -172,6 +178,9 @@ abstract class DataBase
         } elseif (is_numeric($condition)) {
             $querySQL .= " WHERE id = $condition";
         }
+
+        if ($isManuelQuery)
+            $querySQL .= $condition;
 
         $query = $this->link->query($querySQL);
 
