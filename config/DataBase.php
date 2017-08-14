@@ -124,6 +124,10 @@ abstract class DataBase
         $querySQL = "INSERT INTO " . $this->getTableName() . " (" . implode(",", $attributes) . ") VALUES (" . implode(",", $this->valuesOf($attributes)) . ")";
         $query = $this->link->query($querySQL);
 
+
+        if (DEBUG)
+            var_dump($querySQL);
+
         if ($this->link->error)
             echo $this->link->error . PHP_EOL . $querySQL;
 
@@ -148,6 +152,10 @@ abstract class DataBase
         $querySQL = "UPDATE " . $this->getTableName() . " SET " . $this->formatAttributesToUpdateQuery() . " WHERE id=$this->id";
 
         $query = $this->link->query($querySQL);
+
+        if (DEBUG)
+            var_dump($querySQL);
+
         if ($this->link->error)
             echo $this->link->error . PHP_EOL . $querySQL;
 
@@ -155,9 +163,9 @@ abstract class DataBase
             $model = static::findOne($this->id);
 
             if (method_exists($this, 'afterSave')) {
-                call_user_func_array(array($this, 'afterSave'), [true]);
+                call_user_func_array(array($this, 'afterSave'), [false]);
             } else {
-                $this->afterSave(true);
+                $this->afterSave(false);
             }
 
             return $model;
@@ -184,6 +192,9 @@ abstract class DataBase
 
         $query = $this->link->query($querySQL);
 
+        if (DEBUG)
+            var_dump($querySQL);
+
         if ($this->link->error)
             echo $this->link->error . PHP_EOL . $querySQL;
 
@@ -206,14 +217,23 @@ abstract class DataBase
 
         if (is_array($condition)) {
             $querySQL .= " WHERE";
+            $count = count($condition);
             foreach ($condition as $index => $value) {
                 $querySQL .= " $index = '$value'";
+
+                if ($count > 1)
+                    $querySQL .= " AND";
+
+                $count--;
             }
         } elseif (is_numeric($condition)) {
             $querySQL .= " WHERE id = $condition";
         }
 
         $query = $this->link->query($querySQL);
+
+        if (DEBUG)
+            var_dump($querySQL);
 
         if ($this->link->error)
             echo $this->link->error . PHP_EOL . $querySQL;
@@ -233,6 +253,9 @@ abstract class DataBase
     {
         $querySQL = "DELETE FROM " . $this->getTableName() . " WHERE id= $this->id";
         $query = $this->link->query($querySQL);
+
+        if (DEBUG)
+            var_dump($querySQL);
 
         if ($this->link->error)
             echo $this->link->error . PHP_EOL . $querySQL;

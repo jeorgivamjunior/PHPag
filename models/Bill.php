@@ -8,13 +8,14 @@ class Bill extends DataBase
 {
     public $name;
     public $category_id;
+    public $period;
+    public $pay_or_receive;
+
     public $total;
     public $paid;
     public $due;
-    public $pay_or_receive;
 
     public $recurrent;
-    public $period;
 
     /**
      * @inheritdoc
@@ -25,7 +26,7 @@ class Bill extends DataBase
             [['name', 'due', 'total', 'category_id'], 'required'],
             [['category_id', 'paid', 'pay_or_receive', 'recurrent', 'period'], 'integer'],
             [['name', 'due', 'total'], 'string'],
-            [['recurrent', 'period'], 'relation']
+            [['total', 'paid', 'due', 'recurrent'], 'relation']
         ];
     }
 
@@ -51,19 +52,22 @@ class Bill extends DataBase
 
     public function afterSave($insert)
     {
-        $recurrent = new Recurrent();
-        $recurrent = $recurrent->findOne(['bill_id' => $this->id]);
-        if ($this->recurrent) {
-            if (empty($recurrent)) {
-                $recurrent = new Recurrent();
-                $recurrent->bill_id = $this->id;
-                $recurrent->period = $this->period;
-                $recurrent->save();
-            }
-        } else {
-            if (!empty($recurrent))
-                $recurrent->delete();
+        $billDetail = new BillDetail();
+        $billDetail = $billDetail->findOne(['bill_id' => $this->id, 'due' => $this->due]);
+
+        if (empty($billDetail)) {
+            $billDetail = new BillDetail();
         }
+
+        $billDetail->bill_id = $this->id;
+        $billDetail->due = $this->due;
+        $billDetail->total = $this->total;
+        $billDetail->paid = $this->paid;
+
+        if ($insert)
+            $billDetail->save();
+        else
+            $billDetail->update();
 
         parent::afterSave($insert);
     }

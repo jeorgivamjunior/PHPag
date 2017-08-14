@@ -24,19 +24,11 @@ class BillController
 
         /** @var Bill $bill */
         foreach ($modelsToPay as $bill) {
-            $recurrent = new Recurrent();
-            $recurrent = $recurrent->findOne(['bill_id' => $bill->id]);
-            $bill->recurrent = !empty($recurrent);
-
             $billsToPayFiltered[$bill->category_id][] = $bill;
         }
 
         /** @var Bill $bill */
         foreach ($modelsToReceive as $bill) {
-            $recurrent = new Recurrent();
-            $recurrent = $recurrent->findOne(['bill_id' => $bill->id]);
-            $bill->recurrent = !empty($recurrent);
-
             $billsToReceiveFiltered[$bill->category_id][] = $bill;
         }
 
@@ -90,10 +82,6 @@ class BillController
         $model = $bill->findOne($_GET['id']);
         $category = new Category();
         $categories = $category->findAll();
-        $recurrent = new Recurrent();
-        $recurrent = $recurrent->findOne(['bill_id' => $_GET['id']]);
-        $model->recurrent = !empty($recurrent);
-        $model->period = (empty($recurrent)) ? "" : $recurrent->period;
 
         if ($model->load() && $model->update()) {
             header("location:/PHPag/bill/index");

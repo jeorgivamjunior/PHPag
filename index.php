@@ -1,4 +1,7 @@
 <?php
+
+define('DEBUG', true);
+
 ob_start();
 session_start();
 ini_set('display_errors', 1);
