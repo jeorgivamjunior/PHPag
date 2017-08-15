@@ -70,4 +70,12 @@ class Bill extends DataBase
 
         parent::afterSave($insert);
     }
+
+    public function loadDetail()
+    {
+        $detail = (new BillDetail())->findOne(['bill_id' => $this->id, 'due' => $this->due]);
+        $this->due = $detail->due;
+        $this->total = $detail->total;
+        $this->paid = $detail->paid;
+    }
 }

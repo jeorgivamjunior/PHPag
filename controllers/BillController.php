@@ -5,7 +5,6 @@ namespace controllers;
 use models\BillSearch;
 use models\Category;
 use models\Bill;
-use models\Recurrent;
 
 class BillController
 {
@@ -79,7 +78,10 @@ class BillController
     public static function update()
     {
         $bill = new Bill();
-        $model = $bill->findOne($_GET['id']);
+        list($id, $due) = explode('/', base64_decode($_GET['id']));
+        $model = $bill->findOne($id);
+        $model->due = $due;
+        $model->loadDetail();
         $category = new Category();
         $categories = $category->findAll();
 

@@ -41,11 +41,11 @@
             Recorrente
         </div>
         <select name="recurrent" title="" class="form-control">
-            <option value="0" <?= $model->period ? "" : "selected" ?>>Não</option>
-            <option value="1" <?= $model->period ? "selected" : "" ?>>Sim</option>
+            <option value="0" <?= is_null($model->period) ? "" : "selected" ?>>Não</option>
+            <option value="1" <?= !is_null($model->period) ? "selected" : "" ?>>Sim</option>
         </select>
     </div>
-    <div class="form-group" id="period" style="display: <?= $model->period ? 'block' : 'none' ?>">
+    <div class="form-group" id="period" style="display: <?= !is_null($model->period) ? 'block' : 'none' ?>">
         <div class="control-label">
             <?= $model->getLabel('period') ?>
         </div>

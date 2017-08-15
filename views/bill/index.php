@@ -5,8 +5,12 @@
 /** @var $billsToPayFiltered \models\Bill[] */
 /** @var $category \models\Category */
 $due = isset($_GET['due']) ? $_GET['due'] : "";
-list($m, $y) = explode('/', $due);
-$searchModel = "$y-$m";
+if (empty($due)) {
+    $searchModel = date('Y-m');
+} else {
+    list($m, $y) = explode('/', $due);
+    $searchModel = "$y-$m";
+}
 ?>
 <div class="row">
     <?php include('_search.php') ?>
@@ -33,7 +37,10 @@ $searchModel = "$y-$m";
                                     <th>Recorrente</th>
                                     <th>Ações</th>
                                 </tr>
-                                <?php foreach ($modelsToReceive as $model): ?>
+                                <?php foreach ($modelsToReceive as $model):
+                                    $modelDue = date('Y-m', strtotime($model->due));
+                                    $notExist = $modelDue < $searchModel;
+                                    ?>
                                     <tr>
                                         <td><?= $model->name ?></td>
                                         <td><?= "R$ " . number_format($model->total, 2, ',', '.') ?></td>
@@ -45,12 +52,13 @@ $searchModel = "$y-$m";
                                             ?></td>
                                         <td><?= !is_null($model->period) ? "Sim" : "Não" ?></td>
                                         <td>
-                                            <a style="display: <?= $modelDue < $searchModel ? 'none' : '' ?>"
-                                               href="bill/update/<?= $model->id ?>">Editar</a>
-                                            <a style="display: <?= $modelDue < $searchModel ? 'none' : '' ?>"
+                                            <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
+                                               href="bill/update/<?= base64_encode($model->id / $model->due) ?>">Editar</a>
+                                            <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
                                                onclick="if(!confirm('Deseja apagar este item?')){return false}"
                                                href="bill/delete/<?= $model->id ?>">Apagar</a>
                                             <span style="display: <?= $modelDue < $searchModel ? '' : 'none' ?>">Conta ainda não lançada</span>
+                                            <span style="display: <?= $model->paid && !$notExist ? '' : 'none' ?>">Conta ja quitada</span>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -97,7 +105,7 @@ $searchModel = "$y-$m";
                                         <td><?= !is_null($model->period) ? "Sim" : "Não" ?></td>
                                         <td>
                                             <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
-                                               href="bill/update/<?= $model->id ?>">Editar</a>
+                                               href="bill/update/<?= base64_encode($model->id . "/" . $model->due) ?>">Editar</a>
                                             <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
                                                onclick="if(!confirm('Deseja apagar este item?')){return false}"
                                                href="bill/delete/<?= $model->id ?>">Apagar</a>
