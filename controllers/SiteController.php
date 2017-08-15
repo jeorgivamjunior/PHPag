@@ -2,6 +2,9 @@
 
 namespace controllers;
 
+use models\Bill;
+use models\BillSearch;
+use models\Category;
 use models\LoginForm;
 
 /**
@@ -45,6 +48,34 @@ class SiteController
      */
     public static function index()
     {
-        return [];
+        $modelSearchToPay = new BillSearch();
+        $modelsToPay = $modelSearchToPay->search(['pay_or_receive' => 0]);
+
+        $modelSearchToReceive = new BillSearch();
+        $modelsToReceive = $modelSearchToReceive->search(['pay_or_receive' => 1]);
+
+        $category = new Category();
+
+        $billsToPayFiltered = [];
+        $billsToReceiveFiltered = [];
+
+        /** @var Bill $bill */
+        foreach ($modelsToPay as $bill) {
+            $billsToPayFiltered[$bill->category_id][] = $bill;
+        }
+
+        /** @var Bill $bill */
+        foreach ($modelsToReceive as $bill) {
+            $billsToReceiveFiltered[$bill->category_id][] = $bill;
+        }
+
+        return [
+            'modelSearchToPay' => $modelSearchToPay,
+            'modelsToReceive' => $modelsToReceive,
+            'modelsToPay' => $modelsToPay,
+            'billsToReceiveFiltered' => $billsToReceiveFiltered,
+            'billsToPayFiltered' => $billsToPayFiltered,
+            'category' => $category
+        ];
     }
 }

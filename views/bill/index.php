@@ -21,8 +21,10 @@ if (empty($due)) {
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
+
                 <div class="panel-heading">
-                    <a class="btn btn-success" href="bill/receive">Nova conta a receber</a>
+                    <div class="panel-title text-center">Contas à receber</div>
+                    <a class="btn btn-success" href="bill/receive">Nova conta à receber</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -74,7 +76,8 @@ if (empty($due)) {
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
                 <div class="panel-heading">
-                    <a class="btn btn-danger" href="bill/pay">Nova conta a pagar</a>
+                    <div class="panel-title text-center">Contas à pagar</div>
+                    <a class="btn btn-danger" href="bill/pay">Nova conta à pagar</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
