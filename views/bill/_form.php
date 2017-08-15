@@ -38,19 +38,19 @@
     </div>
     <div class="form-group">
         <div class="control-label">
-            <?= $model->getLabel('recurrent') ?>
+            Recorrente
         </div>
         <select name="recurrent" title="" class="form-control">
-            <option value="0" <?= $model->recurrent ? "" : "selected" ?>>Não</option>
-            <option value="1" <?= $model->recurrent ? "selected" : "" ?>>Sim</option>
+            <option value="0" <?= $model->period ? "" : "selected" ?>>Não</option>
+            <option value="1" <?= $model->period ? "selected" : "" ?>>Sim</option>
         </select>
     </div>
-    <div class="form-group" id="period" style="display: <?= $model->recurrent ? 'block' : 'none' ?>">
+    <div class="form-group" id="period" style="display: <?= $model->period ? 'block' : 'none' ?>">
         <div class="control-label">
             <?= $model->getLabel('period') ?>
         </div>
         <input name="period" value="<?= $model->period ?>" title="" type="text"
-               placeholder="deixar vazio caso não tenha duração limitada"
+               placeholder="zero caso não tenha duração limitada"
                class="form-control">
     </div>
     <div class="form-group">

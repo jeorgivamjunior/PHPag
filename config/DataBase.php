@@ -211,7 +211,7 @@ abstract class DataBase
         return $response;
     }
 
-    public function findOne($condition)
+    public function findOne($condition, $isManuelQuery = false)
     {
         $querySQL = "SELECT * FROM " . $this->getTableName();
 
@@ -230,6 +230,53 @@ abstract class DataBase
             $querySQL .= " WHERE id = $condition";
         }
 
+        if ($isManuelQuery)
+            $querySQL .= $condition;
+
+        $query = $this->link->query($querySQL);
+
+        if (DEBUG)
+            var_dump($querySQL);
+
+        if ($this->link->error)
+            echo $this->link->error . PHP_EOL . $querySQL;
+
+        if ($query->num_rows > 0) {
+            foreach ($query->fetch_assoc() as $key => $value) {
+                $this->$key = $value;
+            }
+
+            return $this;
+        }
+
+        return null;
+    }
+
+    public function findAllBySql($querySQL)
+    {
+        $query = $this->link->query($querySQL);
+
+        if (DEBUG)
+            var_dump($querySQL);
+
+        if ($this->link->error)
+            echo $this->link->error . PHP_EOL . $querySQL;
+
+        $response = [];
+        if ($query->num_rows > 0) {
+            while ($record = $query->fetch_assoc()) {
+                foreach ($record as $key => $value) {
+                    $this->$key = $value;
+                }
+                $response[] = clone $this;
+            }
+        }
+
+        return $response;
+    }
+
+    public function findOneBySql($querySQL, $isManuelQuery = false)
+    {
         $query = $this->link->query($querySQL);
 
         if (DEBUG)

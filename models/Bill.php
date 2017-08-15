@@ -15,8 +15,6 @@ class Bill extends DataBase
     public $paid;
     public $due;
 
-    public $recurrent;
-
     /**
      * @inheritdoc
      */
@@ -24,9 +22,9 @@ class Bill extends DataBase
     {
         return [
             [['name', 'due', 'total', 'category_id'], 'required'],
-            [['category_id', 'paid', 'pay_or_receive', 'recurrent', 'period'], 'integer'],
+            [['category_id', 'paid', 'pay_or_receive', 'period'], 'integer'],
             [['name', 'due', 'total'], 'string'],
-            [['total', 'paid', 'due', 'recurrent'], 'relation']
+            [['total', 'paid', 'due'], 'relation']
         ];
     }
 
@@ -41,7 +39,6 @@ class Bill extends DataBase
             'name' => 'Nome',
             'category_id' => 'Categoria',
             'due' => 'Data de Vencimento',
-            'recurrent' => 'Recorrente',
             'total' => 'Total(R$)',
             'paid' => 'Pago',
             'period' => "Duração em meses"
@@ -55,8 +52,10 @@ class Bill extends DataBase
         $billDetail = new BillDetail();
         $billDetail = $billDetail->findOne(['bill_id' => $this->id, 'due' => $this->due]);
 
+        $isNew = false;
         if (empty($billDetail)) {
             $billDetail = new BillDetail();
+            $isNew = true;
         }
 
         $billDetail->bill_id = $this->id;
@@ -64,7 +63,7 @@ class Bill extends DataBase
         $billDetail->total = $this->total;
         $billDetail->paid = $this->paid;
 
-        if ($insert)
+        if ($isNew)
             $billDetail->save();
         else
             $billDetail->update();

@@ -33,34 +33,36 @@ class BillSearch extends Bill
         $due = $m[1] . '-' . $m[0];
         $today = date('Y-m');
         if ($today < $due) {
-            $bill = new Bill();
-            $bill = $bill->findAll();
-
-
-            $billDetail = new BillDetail();
-            $billDetail = $billDetail->findAll();
-
-            $bill_ids = [];
-            /** @var BillDetail $item */
-            foreach ($billDetail as $item) {
-                if ($item->period == '' || is_null($item->period)) {
-                    $bill_ids[] = $item->bill_id;
-                } else {
-                    $model = new Bill();
-                    $model->findOne($item->bill_id);
-                    $month = $item->period - 1;
-                    $date = date('Y-m-d', strtotime($model->due . "+$month months"));
+            $bills = new Bill();
+            $where = " INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE pay_or_receive = $filter[pay_or_receive] AND due >= '$today' ORDER BY due";
+            $bills = $bills->findAll($where, true);
+            $billsArr = [];
+            /** @var Bill $bill */
+            foreach ($bills as $bill) {
+                $detail = (new BillDetail())->findOne(" WHERE bill_id=$bill->id ORDER BY due DESC", true);
+                if (is_null($bill->period) || $bill->period == '') {
+                    if (date('Y-m', strtotime($detail->due)) != $due) {
+                        $detail = (new BillDetail())->findOne(" WHERE bill_id=$bill->id ORDER BY due", true);
+                    }
+                    $month = $bill->period - 1;
+                    $date = date('Y-m-d', strtotime($detail->due . "+$month months"));
                     $inMothYear = date('Y-m', strtotime($date));
-                    if ($due <= $inMothYear) {
-                        $bill_ids[] = $model->id;
+                    if ($due > $inMothYear) {
+                        continue;
                     }
                 }
+
+                $bill->paid = $detail->paid;
+                $bill->total = $detail->total;
+                $bill->due = $detail->due;
+                $billsArr[] = $bill;
             }
-            $bill_ids = (empty($bill_ids)) ? "''" : implode(',', $bill_ids);
-            $where = " WHERE id IN (" . $bill_ids . ") AND pay_or_receive=$this->pay_or_receive ORDER BY due";
+
+            return $billsArr;
         } else {
             $where = " INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE due LIKE '$due%' AND pay_or_receive=$this->pay_or_receive ORDER BY due";
         }
+
         return $bill->findAll($where, true);
     }
 }

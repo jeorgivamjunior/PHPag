@@ -4,6 +4,9 @@
 /** @var $billsToReceiveFiltered \models\Bill[] */
 /** @var $billsToPayFiltered \models\Bill[] */
 /** @var $category \models\Category */
+$due = isset($_GET['due']) ? $_GET['due'] : "";
+list($m, $y) = explode('/', $due);
+$searchModel = "$y-$m";
 ?>
 <div class="row">
     <?php include('_search.php') ?>
@@ -34,13 +37,20 @@
                                     <tr>
                                         <td><?= $model->name ?></td>
                                         <td><?= "R$ " . number_format($model->total, 2, ',', '.') ?></td>
-                                        <td><?= $model->paid ? "Sim" : "Não" ?></td>
-                                        <td><?= date('d/m/Y', strtotime($model->due)) ?></td>
-                                        <td><?= $model->recurrent ? "Sim" : "Não" ?></td>
+                                        <td><?= $model->paid && !$notExist ? "Sim" : "Não" ?></td>
+                                        <td><?=
+                                            $notExist ?
+                                                date('d', strtotime($model->due)) . "/$due" :
+                                                date('d/m/Y', strtotime($model->due))
+                                            ?></td>
+                                        <td><?= !is_null($model->period) ? "Sim" : "Não" ?></td>
                                         <td>
-                                            <a href="bill/update/<?= $model->id ?>">Editar</a>
-                                            <a onclick="if(!confirm('Deseja apagar este item?')){return false}"
+                                            <a style="display: <?= $modelDue < $searchModel ? 'none' : '' ?>"
+                                               href="bill/update/<?= $model->id ?>">Editar</a>
+                                            <a style="display: <?= $modelDue < $searchModel ? 'none' : '' ?>"
+                                               onclick="if(!confirm('Deseja apagar este item?')){return false}"
                                                href="bill/delete/<?= $model->id ?>">Apagar</a>
+                                            <span style="display: <?= $modelDue < $searchModel ? '' : 'none' ?>">Conta ainda não lançada</span>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -71,17 +81,28 @@
                                     <th>Recorrente</th>
                                     <th>Ações</th>
                                 </tr>
-                                <?php foreach ($modelsToPay as $model): ?>
+                                <?php foreach ($modelsToPay as $model):
+                                    $modelDue = date('Y-m', strtotime($model->due));
+                                    $notExist = $modelDue < $searchModel;
+                                    ?>
                                     <tr>
                                         <td><?= $model->name ?></td>
                                         <td><?= "R$ " . number_format($model->total, 2, ',', '.') ?></td>
-                                        <td><?= $model->paid ? "Sim" : "Não" ?></td>
-                                        <td><?= date('d/m/Y', strtotime($model->due)) ?></td>
-                                        <td><?= $model->recurrent ? "Sim" : "Não" ?></td>
+                                        <td><?= $model->paid && !$notExist ? "Sim" : "Não" ?></td>
+                                        <td><?=
+                                            $notExist ?
+                                                date('d', strtotime($model->due)) . "/$due" :
+                                                date('d/m/Y', strtotime($model->due))
+                                            ?></td>
+                                        <td><?= !is_null($model->period) ? "Sim" : "Não" ?></td>
                                         <td>
-                                            <a href="bill/update/<?= $model->id ?>">Editar</a>
-                                            <a onclick="if(!confirm('Deseja apagar este item?')){return false}"
+                                            <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
+                                               href="bill/update/<?= $model->id ?>">Editar</a>
+                                            <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
+                                               onclick="if(!confirm('Deseja apagar este item?')){return false}"
                                                href="bill/delete/<?= $model->id ?>">Apagar</a>
+                                            <span style="display: <?= $modelDue < $searchModel ? '' : 'none' ?>">Conta ainda não lançada</span>
+                                            <span style="display: <?= $model->paid && !$notExist ? '' : 'none' ?>">Conta ja quitada</span>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
