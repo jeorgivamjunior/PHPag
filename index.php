@@ -1,5 +1,5 @@
 <?php
-//uncomment to display queries executed
+//uncomment to display executed queries
 define('DEBUG', true);
 
 ob_start();

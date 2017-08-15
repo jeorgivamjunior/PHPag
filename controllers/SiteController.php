@@ -49,10 +49,10 @@ class SiteController
     public static function index()
     {
         $modelSearchToPay = new BillSearch();
-        $modelsToPay = $modelSearchToPay->search(['pay_or_receive' => 0]);
+        $modelsToPay = $modelSearchToPay->searchByRange(['pay_or_receive' => 0]);
 
         $modelSearchToReceive = new BillSearch();
-        $modelsToReceive = $modelSearchToReceive->search(['pay_or_receive' => 1]);
+        $modelsToReceive = $modelSearchToReceive->searchByRange(['pay_or_receive' => 1]);
 
         $category = new Category();
 
