@@ -10,6 +10,11 @@ class LoginForm extends DataBase
     public $password;
     private $_user;
 
+    /**
+     * Get label from model
+     * @param $attr
+     * @return mixed
+     */
     public function getLabel($attr)
     {
         $labels = [
@@ -20,6 +25,9 @@ class LoginForm extends DataBase
         return $labels[$attr];
     }
 
+    /**
+     * @return bool
+     */
     public function login()
     {
         $user = new User();
@@ -36,11 +44,20 @@ class LoginForm extends DataBase
         return false;
     }
 
+    /**
+     * Get label from model
+     * @return mixed
+     * @internal param $attr
+     */
     function getTableName()
     {
         return "user";
     }
 
+    /**
+     * Handles rules for the model attributes
+     * @return array
+     */
     function rules()
     {
         return [

@@ -9,13 +9,15 @@ use config\DataBase;
  * @package models
  * @property integer $id
  * @property string $name
+ * Handles the Category model
  */
 class Category extends DataBase
 {
     public $name;
 
     /**
-     * @inheritdoc
+     * Handles rules for the model attributes
+     * @return array
      */
     public function rules()
     {
@@ -25,11 +27,20 @@ class Category extends DataBase
         ];
     }
 
+    /**
+     * Get the table name
+     * @return string
+     */
     public function getTableName()
     {
         return "category";
     }
 
+    /**
+     * Get label from model
+     * @param $attr
+     * @return mixed
+     */
     public function getLabel($attr)
     {
         $labels = [

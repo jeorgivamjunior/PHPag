@@ -4,6 +4,11 @@ namespace models;
 
 use config\DataBase;
 
+/**
+ * Class Bill
+ * @package models
+ * Handles Bill Model
+ */
 class Bill extends DataBase
 {
     public $name;
@@ -16,7 +21,8 @@ class Bill extends DataBase
     public $due;
 
     /**
-     * @inheritdoc
+     * Handles rules for the model attributes
+     * @return array
      */
     public function rules()
     {
@@ -28,11 +34,20 @@ class Bill extends DataBase
         ];
     }
 
+    /**
+     * Get the table name
+     * @return string
+     */
     public function getTableName()
     {
         return "bill";
     }
 
+    /**
+     * Get label from model
+     * @param $attr
+     * @return mixed
+     */
     public function getLabel($attr)
     {
         $labels = [
@@ -47,6 +62,10 @@ class Bill extends DataBase
         return $labels[$attr];
     }
 
+    /**
+     * Handles model after save it
+     * @param $insert
+     */
     public function afterSave($insert)
     {
         $billDetail = new BillDetail();
@@ -71,6 +90,9 @@ class Bill extends DataBase
         parent::afterSave($insert);
     }
 
+    /**
+     * Load related model
+     */
     public function loadDetail()
     {
         $detail = (new BillDetail())->findOne(['bill_id' => $this->id, 'due' => $this->due]);

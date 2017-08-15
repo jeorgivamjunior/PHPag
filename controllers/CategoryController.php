@@ -4,8 +4,17 @@ namespace controllers;
 
 use models\Category;
 
+/**
+ * Class CategoryController
+ * @package controllers
+ * Handles Category Controller
+ */
 class CategoryController
 {
+    /**
+     * List all models
+     * @return array
+     */
     public static function index()
     {
         $category = new Category();
@@ -16,6 +25,10 @@ class CategoryController
         ];
     }
 
+    /**
+     * Create a model
+     * @return array
+     */
     public static function create()
     {
         $model = new Category();
@@ -29,6 +42,10 @@ class CategoryController
         ];
     }
 
+    /**
+     * Update model
+     * @return array
+     */
     public static function update()
     {
         $category = new Category();
@@ -43,6 +60,9 @@ class CategoryController
         ];
     }
 
+    /**
+     * Delete model
+     */
     public static function delete()
     {
         $product = new Category();

@@ -6,8 +6,17 @@ use models\BillSearch;
 use models\Category;
 use models\Bill;
 
+/**
+ * Class BillController
+ * @package controllers
+ * Handles Bill Controller
+ */
 class BillController
 {
+    /**
+     * List all models
+     * @return array
+     */
     public static function index()
     {
         $modelSearchToPay = new BillSearch();
@@ -41,6 +50,10 @@ class BillController
         ];
     }
 
+    /**
+     * Handles bills of pay type
+     * @return array
+     */
     public static function pay()
     {
         $model = new Bill();
@@ -58,6 +71,10 @@ class BillController
         ];
     }
 
+    /**
+     * Handles bills of receive type
+     * @return array
+     */
     public static function receive()
     {
         $model = new Bill();
@@ -75,6 +92,10 @@ class BillController
         ];
     }
 
+    /**
+     * Update model
+     * @return array
+     */
     public static function update()
     {
         $bill = new Bill();
@@ -95,6 +116,9 @@ class BillController
         ];
     }
 
+    /**
+     * Delete model
+     */
     public static function delete()
     {
         $bill = new Bill();

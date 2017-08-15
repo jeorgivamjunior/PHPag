@@ -4,6 +4,11 @@ namespace models;
 
 use config\DataBase;
 
+/**
+ * Class BillDetail
+ * @package models
+ * * Handles BillDetail Model
+ */
 class BillDetail extends DataBase
 {
     public $bill_id;
@@ -12,7 +17,8 @@ class BillDetail extends DataBase
     public $due;
 
     /**
-     * @inheritdoc
+     * Handles rules for the model attributes
+     * @return array
      */
     public function rules()
     {
@@ -23,11 +29,20 @@ class BillDetail extends DataBase
         ];
     }
 
+    /**
+     * Get the table name
+     * @return string
+     */
     public function getTableName()
     {
         return "bill_detail";
     }
 
+    /**
+     * Get label from model
+     * @param $attr
+     * @return mixed
+     */
     public function getLabel($attr)
     {
         $labels = [

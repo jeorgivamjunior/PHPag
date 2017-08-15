@@ -4,8 +4,17 @@ namespace controllers;
 
 use models\LoginForm;
 
+/**
+ * Class SiteController
+ * @package controllers
+ * Handles Site Controller
+ */
 class SiteController
 {
+    /**
+     * Handles users login
+     * @return array
+     */
     public static function login()
     {
         $model = new LoginForm();
@@ -19,6 +28,9 @@ class SiteController
         ];
     }
 
+    /**
+     * Handles users logout
+     */
     public static function logout()
     {
         if (isset($_SESSION['userLogged']))
@@ -27,6 +39,10 @@ class SiteController
         header("location:/PHPag/site/login");
     }
 
+    /**
+     * Display Home
+     * @return array
+     */
     public static function index()
     {
         return [];

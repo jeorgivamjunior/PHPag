@@ -2,10 +2,16 @@
 
 namespace models;
 
+/**
+ * Class BillSearch
+ * @package models
+ * Handles the BillSearch model
+ */
 class BillSearch extends Bill
 {
     /**
-     * @inheritdoc
+     * Handles rules for the model attributes
+     * @return array
      */
     public function rules()
     {
@@ -17,6 +23,11 @@ class BillSearch extends Bill
         ];
     }
 
+    /**
+     * Handles search form
+     * @param array $filter
+     * @return array
+     */
     public function search($filter = [])
     {
         $bill = new Bill();

@@ -4,11 +4,20 @@ namespace config;
 
 use mysqli;
 
+/**
+ * Class DataBase
+ * @package config
+ * Core for every connection in the database
+ */
 abstract class DataBase
 {
     protected $link;
     private $config;
 
+    /**
+     * DataBase constructor.
+     * Import config file
+     */
     public function __construct()
     {
         $this->config = include("main.php");
@@ -19,6 +28,11 @@ abstract class DataBase
         }
     }
 
+    /**
+     * Load the model attributes based on the rules role
+     * @param array $from
+     * @return bool
+     */
     public function load($from = [])
     {
         $post = $_POST;
@@ -42,7 +56,12 @@ abstract class DataBase
         return $continue;
     }
 
-    public function getSpecifyRule($name)
+    /**
+     * Auxiliary function to get a specific rule
+     * @param $name
+     * @return array
+     */
+    private function getSpecifyRule($name)
     {
         $fields = [];
         foreach ($this->rules() as $rule) {
@@ -53,7 +72,12 @@ abstract class DataBase
         return $fields;
     }
 
-    public function attributes($toSave = false)
+    /**
+     * Get all the model attributes
+     * @param bool $toSave
+     * @return array
+     */
+    private function attributes($toSave = false)
     {
         $class = new \ReflectionClass($this);
         $names = [];
@@ -70,7 +94,12 @@ abstract class DataBase
         return $names;
     }
 
-    public function validate($attribute)
+    /**
+     * Check each rule for each the model attribute
+     * @param $attribute
+     * @return string
+     */
+    private function validate($attribute)
     {
         $name = $attribute;
         foreach ($this->rules() as $rule) {
@@ -86,7 +115,12 @@ abstract class DataBase
         return $name;
     }
 
-    public function valuesOf($attributes)
+    /**
+     * Get values according the model attributes
+     * @param $attributes
+     * @return array
+     */
+    private function valuesOf($attributes)
     {
         $values = [];
         foreach ($attributes as $attribute) {
@@ -96,7 +130,11 @@ abstract class DataBase
         return $values;
     }
 
-    public function formatAttributesToUpdateQuery()
+    /**
+     * Auxiliary function to build query for update event
+     * @return string
+     */
+    private function formatAttributesToUpdateQuery()
     {
         $query = [];
         $attributes = $this->attributes(true);
@@ -111,8 +149,9 @@ abstract class DataBase
     }
 
     /**
-     * @param array $attributes
-     * @return bool|DataBase
+     * Save the model
+     * @param null $attributes
+     * @return DataBase|null
      */
     public function save($attributes = null)
     {
@@ -145,6 +184,10 @@ abstract class DataBase
         return null;
     }
 
+    /**
+     * Update the model
+     * @return DataBase|null
+     */
     public function update()
     {
         $this->beforeSave();
@@ -174,6 +217,12 @@ abstract class DataBase
         return null;
     }
 
+    /**
+     * Find all models based on the conditions
+     * @param null $condition
+     * @param bool $isManuelQuery
+     * @return array
+     */
     public function findAll($condition = null, $isManuelQuery = false)
     {
         $querySQL = "SELECT * FROM " . $this->getTableName();
@@ -211,6 +260,12 @@ abstract class DataBase
         return $response;
     }
 
+    /**
+     * Find one model based on the conditions
+     * @param $condition
+     * @param bool $isManuelQuery
+     * @return $this|null
+     */
     public function findOne($condition, $isManuelQuery = false)
     {
         $querySQL = "SELECT * FROM " . $this->getTableName();
@@ -252,6 +307,11 @@ abstract class DataBase
         return null;
     }
 
+    /**
+     * Find all models based on the conditions using query
+     * @param $querySQL
+     * @return array
+     */
     public function findAllBySql($querySQL)
     {
         $query = $this->link->query($querySQL);
@@ -275,6 +335,12 @@ abstract class DataBase
         return $response;
     }
 
+    /**
+     * Find one model based on the conditions using query
+     * @param $querySQL
+     * @param bool $isManuelQuery
+     * @return $this|null
+     */
     public function findOneBySql($querySQL, $isManuelQuery = false)
     {
         $query = $this->link->query($querySQL);
@@ -296,6 +362,10 @@ abstract class DataBase
         return null;
     }
 
+    /**
+     * Delete model selected
+     * @return bool
+     */
     public function delete()
     {
         $querySQL = "DELETE FROM " . $this->getTableName() . " WHERE id= $this->id";
@@ -310,15 +380,30 @@ abstract class DataBase
         return (!empty($query));
     }
 
+    /**
+     * Handles model before the save event
+     */
     public function beforeSave()
     {
     }
 
+    /**
+     * Handles model after the save event
+     * @param $insert
+     */
     public function afterSave($insert)
     {
     }
 
+    /**
+     * Get the table name from the model
+     * @return mixed
+     */
     abstract function getTableName();
 
+    /**
+     * Get the model rules
+     * @return mixed
+     */
     abstract function rules();
 }

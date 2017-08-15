@@ -4,8 +4,17 @@ namespace controllers;
 
 use models\User;
 
+/**
+ * Class UserController
+ * @package controllers
+ * Handles User Controller
+ */
 class UserController
 {
+    /**
+     * List all models
+     * @return array
+     */
     public static function index()
     {
         $product = new User();
@@ -16,6 +25,10 @@ class UserController
         ];
     }
 
+    /**
+     * Create a model
+     * @return array
+     */
     public static function create()
     {
         $model = new User();
@@ -29,6 +42,10 @@ class UserController
         ];
     }
 
+    /**
+     * Update model
+     * @return array
+     */
     public static function update()
     {
         $user = new User();
@@ -43,7 +60,9 @@ class UserController
         ];
     }
 
-
+    /**
+     * Delete model
+     */
     public static function delete()
     {
         $user = new User();
