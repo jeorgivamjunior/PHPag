@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use models\BillDetail;
 use models\BillSearch;
 use models\Category;
 use models\Bill;
@@ -121,8 +122,9 @@ class BillController
      */
     public static function delete()
     {
-        $bill = new Bill();
-        $model = $bill->findOne($_GET['id']);
+        list($id, $due) = explode('/', base64_decode($_GET['id']));
+
+        $model = (new BillDetail())->findOne(['bill_id' => $id, 'due' => $due]);
         $model->delete();
         header("location:/PHPag/bill/index");
     }

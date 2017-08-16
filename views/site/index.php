@@ -48,7 +48,9 @@ if (empty($due)) {
                                 <th>Recorrente</th>
                                 <th>Ações</th>
                             </tr>
-                            <?php foreach ($modelsToReceive as $model):
+                            <?php
+                            $toReceive = 0;
+                            foreach ($modelsToReceive as $model):
                                 $modelDue = date('Y-m', strtotime($model->due));
                                 $notExist = $modelDue < $searchModel;
                                 ?>
@@ -134,24 +136,23 @@ if (empty($due)) {
         </div>
     </div>
 </div>
-
 <script>
     var ctx = document.getElementById("myChart").getContext('2d');
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Ago", 'Set', "Out"],
+            labels: ["Contas"],
             datasets: [
                 {
                     label: 'Contas à receber',
-                    data: [1, 2, 3],
+                    data: [<?= count($modelsToReceive) ?>],
                     backgroundColor: "rgba(38,185,155,0.5)",
                     borderColor: "rgba(38,185,155,1)",
                     borderWidth: 1
                 },
                 {
                     label: 'Contas à pagar',
-                    data: [5, 5, 3],
+                    data: [<?= count($modelsToPay) ?>],
                     backgroundColor: "rgba(217,83,79,0.5)",
                     borderColor: "rgba(217,83,79,1)",
                     borderWidth: 1

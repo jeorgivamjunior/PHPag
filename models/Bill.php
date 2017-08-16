@@ -70,7 +70,6 @@ class Bill extends DataBase
     {
         $billDetail = new BillDetail();
         $billDetail = $billDetail->findOne(['bill_id' => $this->id, 'due' => $this->due]);
-
         $isNew = false;
         if (empty($billDetail)) {
             $billDetail = new BillDetail();

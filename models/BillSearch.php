@@ -59,7 +59,8 @@ class BillSearch extends Bill
                     if ($due > $inMothYear) {
                         continue;
                     }
-                }
+                } else if (is_null($bill->period))
+                    continue;
 
                 $bill->paid = $detail->paid;
                 $bill->total = $detail->total;
@@ -75,10 +76,16 @@ class BillSearch extends Bill
         return $bill->findAll($where, true);
     }
 
+    /**
+     * Handles graph page
+     * @param array $filter
+     * @return array
+     */
     public function searchByRange($filter = [])
     {
         $today = date('Y-m-d');
         $future = date('Y-m-d', strtotime($today . "+1 months"));
+        var_dump($future);
         $query = "SELECT bill.*, due, paid, total FROM bill INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE pay_or_receive = $filter[pay_or_receive] AND due BETWEEN '$today' AND '$future' ORDER BY due";
         $bills = (new Bill())->findAllBySql($query);
 
@@ -92,6 +99,7 @@ class BillSearch extends Bill
                 }
                 $month = $bill->period - 1;
                 $date = date('Y-m-d', strtotime($detail->due . "+$month months"));
+                var_dump($date);
                 $inMothYear = date('Y-m', strtotime($date));
                 if ($due > $inMothYear) {
                     continue;

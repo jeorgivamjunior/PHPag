@@ -58,7 +58,7 @@ if (empty($due)) {
                                                href="bill/update/<?= base64_encode($model->id / $model->due) ?>">Editar</a>
                                             <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
                                                onclick="if(!confirm('Deseja apagar este item?')){return false}"
-                                               href="bill/delete/<?= $model->id ?>">Apagar</a>
+                                               href="bill/delete/<?= base64_encode($model->id . "/" . $model->due) ?>">Apagar</a>
                                             <span style="display: <?= $modelDue < $searchModel ? '' : 'none' ?>">Conta ainda não lançada</span>
                                             <span style="display: <?= $model->paid && !$notExist ? '' : 'none' ?>">Conta ja quitada</span>
                                         </td>
@@ -111,7 +111,7 @@ if (empty($due)) {
                                                href="bill/update/<?= base64_encode($model->id . "/" . $model->due) ?>">Editar</a>
                                             <a style="display: <?= $modelDue < $searchModel || $model->paid ? 'none' : '' ?>"
                                                onclick="if(!confirm('Deseja apagar este item?')){return false}"
-                                               href="bill/delete/<?= $model->id ?>">Apagar</a>
+                                               href="bill/delete/<?= base64_encode($model->id . "/" . $model->due) ?>">Apagar</a>
                                             <span style="display: <?= $modelDue < $searchModel ? '' : 'none' ?>">Conta ainda não lançada</span>
                                             <span style="display: <?= $model->paid && !$notExist ? '' : 'none' ?>">Conta ja quitada</span>
                                         </td>
