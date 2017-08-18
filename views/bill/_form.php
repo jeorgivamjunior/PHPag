@@ -24,7 +24,7 @@
             var category = $('select[name="category_id"]');
             var due = $('input[name="due"]');
             if (total.val() && title.val() && category.val() && due.val()) {
-                if (limit < parseInt(total.val())) {
+                if (limit < total.val().substr(0, total.val().indexOf(',')).replace('.', '')) {
                     alert("O valor total não pode ser maior que " + limit);
                     return false;
                 }

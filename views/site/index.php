@@ -50,7 +50,7 @@ if (empty($due)) {
                             </tr>
                             <?php
                             $toReceive = 0;
-                            foreach ($modelsToReceive as $model):
+                            foreach ($models as $model):
                                 $modelDue = date('Y-m', strtotime($model->due));
                                 $notExist = $modelDue < $searchModel;
                                 ?>
@@ -107,7 +107,7 @@ if (empty($due)) {
                                 <th>Recorrente</th>
                                 <th>Ações</th>
                             </tr>
-                            <?php foreach ($modelsToPay as $model):
+                            <?php foreach ($models as $model):
                                 $modelDue = date('Y-m', strtotime($model->due));
                                 $notExist = $modelDue < $searchModel;
                                 ?>
