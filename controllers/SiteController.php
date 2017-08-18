@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use config\Main;
 use models\Bill;
 use models\BillSearch;
 use models\Category;
@@ -23,7 +24,7 @@ class SiteController
         $model = new LoginForm();
 
         if ($model->load() && $model->login()) {
-            header("location:/PHPag/bill/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "bill/index");
         }
 
         return [
@@ -39,7 +40,7 @@ class SiteController
         if (isset($_SESSION['userLogged']))
             unset($_SESSION['userLogged']);
 
-        header("location:/PHPag/site/login");
+        header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "site/login");
     }
 
     /**

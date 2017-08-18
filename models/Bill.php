@@ -19,6 +19,7 @@ class Bill extends DataBase
     public $total;
     public $paid;
     public $due;
+    public $discount;
 
     /**
      * Handles rules for the model attributes
@@ -29,8 +30,8 @@ class Bill extends DataBase
         return [
             [['name', 'due', 'total', 'category_id'], 'required'],
             [['category_id', 'paid', 'pay_or_receive', 'period'], 'integer'],
-            [['name', 'due', 'total'], 'string'],
-            [['total', 'paid', 'due'], 'relation']
+            [['name', 'due', 'total', 'discount'], 'string'],
+            [['total', 'paid', 'due', 'discount'], 'relation']
         ];
     }
 
@@ -56,6 +57,7 @@ class Bill extends DataBase
             'due' => 'Data de Vencimento',
             'total' => 'Total(R$)',
             'paid' => 'Pago',
+            'discount' => "Desconto",
             'period' => "Duração em meses"
         ];
 
@@ -80,7 +82,7 @@ class Bill extends DataBase
         $billDetail->due = $this->due;
         $billDetail->total = $this->total;
         $billDetail->paid = $this->paid;
-
+        $billDetail->discount = $this->discount;
         if ($isNew)
             $billDetail->save();
         else

@@ -20,8 +20,13 @@ abstract class DataBase
      */
     public function __construct()
     {
-        $this->config = include("main.php");
-        $this->link = new mysqli($this->config['db']['host'], $this->config['db']['user'], $this->config['db']['password'], $this->config['db']['database']);
+        $this->config = Main::$db;
+        $this->link = new mysqli(
+            $this->config['host'],
+            $this->config['user'],
+            $this->config['password'],
+            $this->config['database']
+        );
 
         if ($this->link->connect_errno > 0) {
             die('Unable to connect to database [' . $this->link->connect_error . ']');
@@ -164,7 +169,7 @@ abstract class DataBase
         $query = $this->link->query($querySQL);
 
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)
@@ -196,7 +201,7 @@ abstract class DataBase
 
         $query = $this->link->query($querySQL);
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)
@@ -241,7 +246,7 @@ abstract class DataBase
 
         $query = $this->link->query($querySQL);
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)
@@ -290,7 +295,7 @@ abstract class DataBase
 
         $query = $this->link->query($querySQL);
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)
@@ -316,7 +321,7 @@ abstract class DataBase
     {
         $query = $this->link->query($querySQL);
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)
@@ -345,7 +350,7 @@ abstract class DataBase
     {
         $query = $this->link->query($querySQL);
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)
@@ -371,7 +376,7 @@ abstract class DataBase
         $querySQL = "DELETE FROM " . $this->getTableName() . " WHERE id= $this->id";
         $query = $this->link->query($querySQL);
 
-        if (DEBUG)
+        if (Main::$general['debug'])
             var_dump($querySQL);
 
         if ($this->link->error)

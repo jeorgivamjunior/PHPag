@@ -34,7 +34,7 @@ class BillSearch extends Bill
         $get = $_GET;
         $get = array_merge($filter, $get);
         $today = date('Y-m-d');
-        $query = "SELECT bill.*, due, paid, total FROM bill INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE pay_or_receive = $filter[pay_or_receive] AND due >= '$today' ORDER BY due";
+        $query = "SELECT bill.*, due, paid, total, discount FROM bill INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE pay_or_receive = $filter[pay_or_receive] AND due >= '$today' ORDER BY due";
         $bills = (new Bill())->findAllBySql($query);
 
         if (!$this->load($get)) {
@@ -86,7 +86,7 @@ class BillSearch extends Bill
         $today = date('Y-m-d');
         $future = date('Y-m-d', strtotime($today . "+1 months"));
         var_dump($future);
-        $query = "SELECT bill.*, due, paid, total FROM bill INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE pay_or_receive = $filter[pay_or_receive] AND due BETWEEN '$today' AND '$future' ORDER BY due";
+        $query = "SELECT bill.*, due, paid, total, discount FROM bill INNER JOIN bill_detail ON bill.id=bill_detail.bill_id WHERE pay_or_receive = $filter[pay_or_receive] AND due BETWEEN '$today' AND '$future' ORDER BY due";
         $bills = (new Bill())->findAllBySql($query);
 
         $billsArr = [];

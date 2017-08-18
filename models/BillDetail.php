@@ -15,6 +15,7 @@ class BillDetail extends DataBase
     public $total;
     public $paid;
     public $due;
+    public $discount;
 
     /**
      * Handles rules for the model attributes
@@ -24,7 +25,7 @@ class BillDetail extends DataBase
     {
         return [
             [['due', 'total', 'bill_id'], 'required'],
-            [['due'], 'string'],
+            [['due', 'discount'], 'string'],
             [['paid', 'bill_id'], 'integer'],
         ];
     }

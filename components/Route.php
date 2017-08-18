@@ -2,6 +2,8 @@
 
 namespace components;
 
+use config\Main;
+
 /**
  * Class Route
  * @package components
@@ -16,34 +18,37 @@ class Route
      */
     public static function generate()
     {
-        if (DEBUG) {
+        if (Main::$general['debug']) {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
         }
 
         $params = explode('/', $_SERVER['REQUEST_URI']);
-        if (!isset($_SESSION['userLogged']) && $params[2] != 'site' && $params[3] != 'login')
-            header("location:/PHPag/site/login");
+        $controller = (Main::$general['dirBase'] == '/') ? 1 : 2;
+        $action = (Main::$general['dirBase'] == '/') ? 2 : 3;
+        $param = (Main::$general['dirBase'] == '/') ? 3 : 4;
+        if (!isset($_SESSION['userLogged']) && $params[$controller] != 'site' && $params[$action] != 'login')
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "site/login");
 
         if (count($params) > 2) {
 
-            if (empty($params[2])) {
-                $params[2] = 'site';
-                $params[3] = 'index';
+            if (empty($params[$controller])) {
+                $params[$controller] = 'site';
+                $params[$action] = 'index';
             }
 
-            if (isset($params[4])) {
-                $_GET['id'] = $params[4];
+            if (isset($params[$param])) {
+                $_GET['id'] = $params[$param];
             }
 
-            $class = "controllers\\" . ucfirst($params[2]) . "Controller";
-            foreach (call_user_func($class . '::' . explode('?', $params[3])[0]) as $key => $item) {
+            $class = "controllers\\" . ucfirst($params[$controller]) . "Controller";
+            foreach (call_user_func($class . '::' . explode('?', $params[$action])[0]) as $key => $item) {
                 $$key = $item;
             }
 
-            if ($params[3] != 'delete' && $params[3] != 'logout')
-                require_once("views/$params[2]/" . explode('?', $params[3])[0] . ".php");
+            if ($params[$action] != 'delete' && $params[$action] != 'logout')
+                require_once("views/$params[$controller]/" . explode('?', $params[$action])[0] . ".php");
         }
     }
 }

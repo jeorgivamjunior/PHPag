@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use config\Main;
 use models\BillDetail;
 use models\BillSearch;
 use models\Category;
@@ -63,9 +64,8 @@ class BillController
         $categories = $category->findAll();
 
         if ($model->load() && $model->save()) {
-            header("location:/PHPag/bill/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "bill/index");
         }
-
         return [
             'model' => $model,
             'categories' => $categories
@@ -84,7 +84,7 @@ class BillController
         $categories = $category->findAll();
 
         if ($model->load() && $model->save()) {
-            header("location:/PHPag/bill/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "bill/index");
         }
 
         return [
@@ -108,7 +108,7 @@ class BillController
         $categories = $category->findAll();
 
         if ($model->load() && $model->update()) {
-            header("location:/PHPag/bill/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "bill/index");
         }
 
         return [
@@ -126,6 +126,6 @@ class BillController
 
         $model = (new BillDetail())->findOne(['bill_id' => $id, 'due' => $due]);
         $model->delete();
-        header("location:/PHPag/bill/index");
+        header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "bill/index");
     }
 }

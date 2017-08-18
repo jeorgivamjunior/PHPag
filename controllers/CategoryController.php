@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use config\Main;
 use models\Category;
 
 /**
@@ -34,7 +35,7 @@ class CategoryController
         $model = new Category();
 
         if ($model->load() && $model->save()) {
-            header("location:/PHPag/category/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "category/index");
         }
 
         return [
@@ -52,7 +53,7 @@ class CategoryController
         $model = $category->findOne($_GET['id']);
 
         if ($model->load() && $model->update()) {
-            header("location:/PHPag/category/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "category/index");
         }
 
         return [
@@ -68,6 +69,6 @@ class CategoryController
         $product = new Category();
         $model = $product->findOne($_GET['id']);
         $model->delete();
-        header("location:/PHPag/category/index");
+        header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "category/index");
     }
 }

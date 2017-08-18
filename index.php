@@ -1,6 +1,6 @@
 <?php
-//uncomment to display executed queries
-define('DEBUG', true);
+
+use config\Main;
 
 ob_start();
 session_start();
@@ -18,7 +18,7 @@ use components\Route;
 <!doctype html>
 <html lang="en">
 <head>
-    <base href="/PHPag/">
+    <base href="/<?= ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") ?>">
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -166,10 +166,14 @@ use components\Route;
 
 <!-- Bootstrap -->
 <script src="node_modules/gentelella/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
 <!-- Custom Theme Scripts -->
 <script src="node_modules/gentelella/build/js/custom.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="node_modules/jquery-maskmoney/dist/jquery.maskMoney.min.js"></script>
 </body>
 </html>

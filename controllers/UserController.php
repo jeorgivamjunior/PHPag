@@ -2,6 +2,7 @@
 
 namespace controllers;
 
+use config\Main;
 use models\User;
 
 /**
@@ -34,7 +35,7 @@ class UserController
         $model = new User();
 
         if ($model->load() && $model->save()) {
-            header("location:/PHPag/user/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "user/index");
         }
 
         return [
@@ -52,7 +53,7 @@ class UserController
         $model = $user->findOne($_GET['id']);
 
         if ($model->load() && $model->update()) {
-            header("location:/PHPag/user/index");
+            header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "user/index");
         }
 
         return [
@@ -68,6 +69,6 @@ class UserController
         $user = new User();
         $model = $user->findOne($_GET['id']);
         $model->delete();
-        header("location:/PHPag/user/index");
+        header("location:/" . ((Main::$general['dirBase'] == '/') ? '' : Main::$general['dirBase'] . "/") . "user/index");
     }
 }
